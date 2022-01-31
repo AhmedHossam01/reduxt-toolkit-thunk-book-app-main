@@ -19,12 +19,12 @@ export const getBooks = createAsyncThunk(
 export const insertBook = createAsyncThunk(
   "books/insertBook",
   async (args, thunkAPI) => {
-    const { rejectWithValue } = thunkAPI;
+    const { rejectWithValue, getState } = thunkAPI;
 
     try {
       const res = await fetch("http://localhost:3005/books", {
         method: "POST",
-        body: JSON.stringify(args),
+        body: JSON.stringify({ ...args, author: getState().auth.name }),
         headers: {
           "Content-type": "application/json",
         },

@@ -1,6 +1,6 @@
 import React from "react";
 
-const BooksList = ({ isLoading, books }) => {
+const BooksList = ({ isLoading, books, isLoggedIn }) => {
   const BookList = books.length
     ? books.map((item) => (
         <li
@@ -8,14 +8,16 @@ const BooksList = ({ isLoading, books }) => {
           key={item.id}
         >
           <div>{item.title}</div>
-          <div className="btn-group" role="group">
-            <button type="button" className="btn btn-primary">
-              Read
-            </button>
-            <button type="button" className="btn btn-danger">
-              Delete
-            </button>
-          </div>
+          {isLoggedIn && (
+            <div className="btn-group" role="group">
+              <button type="button" className="btn btn-primary">
+                Read
+              </button>
+              <button type="button" className="btn btn-danger">
+                Delete
+              </button>
+            </div>
+          )}
         </li>
       ))
     : "No Books Available";

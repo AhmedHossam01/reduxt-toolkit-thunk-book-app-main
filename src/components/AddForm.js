@@ -1,9 +1,11 @@
 import React, { useRef } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { insertBook } from "../store/bookSlice";
 
 const Addform = () => {
   const dispatch = useDispatch();
+
+  const { isLoggedIn } = useSelector((state) => state.auth);
 
   const title = useRef(null);
   const price = useRef(null);
@@ -29,41 +31,45 @@ const Addform = () => {
     <div className="row">
       <div className="col-12 mt-3">
         <h2>Insert Book</h2>
-        <form onSubmit={handleSubmit}>
-          <div className="form-group">
-            <label htmlFor="title">Title</label>
-            <input
-              type="text"
-              className="form-control"
-              id="title"
-              required
-              ref={title}
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="price">Price</label>
-            <input
-              type="number"
-              className="form-control"
-              id="price"
-              required
-              ref={price}
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="Description">Description</label>
-            <textarea
-              className="form-control"
-              id="Description"
-              rows="3"
-              required
-              ref={desc}
-            ></textarea>
-          </div>
-          <button type="submit" className="btn btn-primary">
-            Submit
-          </button>
-        </form>
+        {isLoggedIn ? (
+          <form onSubmit={handleSubmit}>
+            <div className="form-group">
+              <label htmlFor="title">Title</label>
+              <input
+                type="text"
+                className="form-control"
+                id="title"
+                required
+                ref={title}
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="price">Price</label>
+              <input
+                type="number"
+                className="form-control"
+                id="price"
+                required
+                ref={price}
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="Description">Description</label>
+              <textarea
+                className="form-control"
+                id="Description"
+                rows="3"
+                required
+                ref={desc}
+              ></textarea>
+            </div>
+            <button type="submit" className="btn btn-primary">
+              Submit
+            </button>
+          </form>
+        ) : (
+          "Please login first"
+        )}
       </div>
     </div>
   );
